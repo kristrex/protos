@@ -1,4 +1,4 @@
-module github.com/kristrex.protos
+module github.com/kristrex/protos
 
 go 1.23.0
 
