@@ -8,29 +8,36 @@ service Auth {
   rpc Register(RegisterRequest) returns (RegisterResponse);
   rpc Login (LoginRequest) returns (LoginResponse);
   rpc IsAdmin(IsAdminRequest) returns (IsAdminResponse);
+  rpc RefreshToken(RefreshTokenRequest) returns (RefreshTokenResponse);
+  rpc Logout(LogoutRequest) returns (LogoutResponse);
 }
 
 message RegisterRequest {
-  string name = 1;
-  string lastName = 2;
-  string phone = 3;
-  string email = 4;
-  string goal = 5;
-  string password = 6;
+  string name = 1; //Имя
+  string last_name = 2; // Фамилия
+  string phone = 3; // Телефон
+  string email = 4; // Почта
+  string goal = 5; // Цель: model/scout
+  string password = 6; // Пароль
 }
 
 message RegisterResponse {
-  string user_id = 1;
+  string user_id = 1; // Идентификатор пользователя
+  int32 error_code = 2; // Код ошибки
+  string error_message = 3; // Сообщение об ошибке
 }
 
 message LoginRequest {
-  string email = 1;
-  string password = 2;
-  int32 app_id = 3;
+  string email = 1; // Почта
+  string password = 2; // Пароль
+  int32 app_id = 3; // Id приложения, которое запрашивает (телефон/браузер)
 }
 
 message LoginResponse {
-  string token = 1;
+  string access_token = 1;
+  string refresh_token = 2;
+  int32 error_code = 3;
+  string error_message = 4;
 }
 
 message IsAdminRequest {
@@ -39,4 +46,23 @@ message IsAdminRequest {
 
 message IsAdminResponse {
   bool is_admin = 1;
+}
+
+message RefreshTokenRequest {
+  string refresh_token = 1;
+}
+
+message RefreshTokenResponse {
+  string access_token = 1;
+  string refresh_token = 2;
+}
+
+message LogoutRequest {
+  string refresh_token = 1;
+}
+
+message LogoutResponse {
+  bool success = 1;
+  int32 error_code = 2;
+  string error_message = 3;
 }
