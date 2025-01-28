@@ -12,11 +12,6 @@ service Auth {
   rpc Logout(LogoutRequest) returns (LogoutResponse);
 }
 
-message ErrorResponse {
-  int32 error_code = 1; // Код ошибки
-  string error_message = 2; // Сообщение об ошибке
-}
-
 message RegisterRequest {
   string name = 1; //Имя
   string last_name = 2; // Фамилия
@@ -28,7 +23,6 @@ message RegisterRequest {
 
 message RegisterResponse {
   string user_id = 1; // Идентификатор пользователя
-  ErrorResponse error = 2; // Ошибка
 }
 
 message LoginRequest {
@@ -40,7 +34,6 @@ message LoginRequest {
 message LoginResponse {
   string access_token = 1;
   string refresh_token = 2;
-  ErrorResponse error = 3; // Ошибка
 }
 
 message IsAdminRequest {
@@ -49,7 +42,6 @@ message IsAdminRequest {
 
 message IsAdminResponse {
   bool is_admin = 1;
-  ErrorResponse error = 2; // Ошибка
 }
 
 message RefreshTokenRequest {
@@ -59,7 +51,6 @@ message RefreshTokenRequest {
 message RefreshTokenResponse {
   string access_token = 1;
   string refresh_token = 2;
-  ErrorResponse error = 3; // Ошибка
 }
 
 message LogoutRequest {
@@ -67,5 +58,6 @@ message LogoutRequest {
 }
 
 message LogoutResponse {
-  ErrorResponse error = 1; // Ошибка
+  int32 error_code = 1; // Код ошибки
+  string error_message = 2; // Сообщение об ошибке
 }
