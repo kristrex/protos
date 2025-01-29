@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package auth;
 
+import "google/protobuf/empty.proto";
+
 option  go_package = "bystrov.sso.1;ssov1";
 
 service Auth {
@@ -9,7 +11,7 @@ service Auth {
   rpc Login (LoginRequest) returns (LoginResponse);
   rpc IsAdmin(IsAdminRequest) returns (IsAdminResponse);
   rpc RefreshToken(RefreshTokenRequest) returns (RefreshTokenResponse);
-  rpc Logout(LogoutRequest) returns (LogoutResponse);
+  rpc Logout(LogoutRequest) returns (google.protobuf.Empty);
 }
 
 message RegisterRequest {
@@ -55,9 +57,4 @@ message RefreshTokenResponse {
 
 message LogoutRequest {
   string refresh_token = 1;
-}
-
-message LogoutResponse {
-  int32 error_code = 1; // Код ошибки
-  string error_message = 2; // Сообщение об ошибке
 }

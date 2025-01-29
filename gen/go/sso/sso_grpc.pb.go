@@ -11,6 +11,7 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -34,7 +35,7 @@ type AuthClient interface {
 	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
 	IsAdmin(ctx context.Context, in *IsAdminRequest, opts ...grpc.CallOption) (*IsAdminResponse, error)
 	RefreshToken(ctx context.Context, in *RefreshTokenRequest, opts ...grpc.CallOption) (*RefreshTokenResponse, error)
-	Logout(ctx context.Context, in *LogoutRequest, opts ...grpc.CallOption) (*LogoutResponse, error)
+	Logout(ctx context.Context, in *LogoutRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type authClient struct {
@@ -85,9 +86,9 @@ func (c *authClient) RefreshToken(ctx context.Context, in *RefreshTokenRequest, 
 	return out, nil
 }
 
-func (c *authClient) Logout(ctx context.Context, in *LogoutRequest, opts ...grpc.CallOption) (*LogoutResponse, error) {
+func (c *authClient) Logout(ctx context.Context, in *LogoutRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(LogoutResponse)
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, Auth_Logout_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -103,7 +104,7 @@ type AuthServer interface {
 	Login(context.Context, *LoginRequest) (*LoginResponse, error)
 	IsAdmin(context.Context, *IsAdminRequest) (*IsAdminResponse, error)
 	RefreshToken(context.Context, *RefreshTokenRequest) (*RefreshTokenResponse, error)
-	Logout(context.Context, *LogoutRequest) (*LogoutResponse, error)
+	Logout(context.Context, *LogoutRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedAuthServer()
 }
 
@@ -126,7 +127,7 @@ func (UnimplementedAuthServer) IsAdmin(context.Context, *IsAdminRequest) (*IsAdm
 func (UnimplementedAuthServer) RefreshToken(context.Context, *RefreshTokenRequest) (*RefreshTokenResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RefreshToken not implemented")
 }
-func (UnimplementedAuthServer) Logout(context.Context, *LogoutRequest) (*LogoutResponse, error) {
+func (UnimplementedAuthServer) Logout(context.Context, *LogoutRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Logout not implemented")
 }
 func (UnimplementedAuthServer) mustEmbedUnimplementedAuthServer() {}
