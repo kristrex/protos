@@ -12,6 +12,7 @@ service Auth {
   rpc IsAdmin(IsAdminRequest) returns (IsAdminResponse);
   rpc RefreshToken(RefreshTokenRequest) returns (RefreshTokenResponse);
   rpc Logout(LogoutRequest) returns (google.protobuf.Empty);
+  rpc Session(SessionRequest) returns (SessionResponse);
 }
 
 message RegisterRequest {
@@ -57,4 +58,16 @@ message RefreshTokenResponse {
 
 message LogoutRequest {
   string refresh_token = 1;
+}
+
+message SessionRequest {
+  string access_token = 1;
+}
+
+message SessionResponse {
+  string id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string role = 4;
+  bool is_admin = 5;
 }
