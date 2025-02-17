@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+package profile;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+option  go_package = "bystrov.profile.1;profile1";
+
+service Profile {
+  rpc CreateProfile(CreateProfileRequest) returns (google.protobuf.Empty);
+  rpc GetProfileByID(GetProfileByIDRequest) returns (GetProfileByIDResponse);
+  rpc UpdateProfile(UpdateProfileRequest) returns (google.protobuf.Empty);
+  rpc DeleteProfile(DeleteProfileRequest) returns (google.protobuf.Empty);
+}
+
+message CreateProfileRequest {
+  string user_id = 1;
+  string name = 2; // Имя
+  string last_name = 3; // Фамилия
+}
+
+message UpdateProfileRequest {
+  string name = 1; // Имя
+  string last_name = 2; // Фамилия
+  string sex = 3; // Пол
+  google.protobuf.Timestamp date_of_birth = 4; // Дата рождения
+  string city = 5;
+  int32 height = 6;
+  int32 chest_size = 7;
+  int32 waist_size = 8;
+  int32 hip_size = 9;
+  int32 weight = 10;
+
+  // Список всех фотографий с URL-адресами
+  repeated string photos = 11;
+
+  string avatar_url = 12;
+
+  string user_id = 13;
+}
+
+message GetProfileByIDRequest {
+  string user_id = 1;
+}
+
+message GetProfileByIDResponse {
+  string name = 1; //Имя
+  string last_name = 2; // Фамилия
+  string sex = 3; // Пол
+  google.protobuf.Timestamp date_of_birth = 4;
+  string city = 5;
+  int32 height = 6;
+  int32 chest_size = 7;
+  int32 waist_size = 8;
+  int32 hip_size = 9;
+  int32 weight = 10;
+  repeated string photos = 11;
+
+  // ID аватарки (указывает на одну из фотографий в списке photos)
+  string avatar_url = 12; // UUID аватарки
+}
+
+message DeleteProfileRequest {
+  string user_id = 1;
+}
