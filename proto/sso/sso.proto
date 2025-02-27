@@ -18,10 +18,9 @@ service Auth {
 message RegisterRequest {
   string name = 1; //Имя
   string last_name = 2; // Фамилия
-  string phone = 3; // Телефон
-  string email = 4; // Почта
-  string goal = 5; // Цель: model/scout
-  string password = 6; // Пароль
+  string email = 3; // Почта
+  string goal = 4; // Цель: model/scout
+  string password = 5; // Пароль
 }
 
 message RegisterResponse {
