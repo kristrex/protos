@@ -24,6 +24,7 @@ const (
 	Profile_GetProfileByID_FullMethodName = "/profile.Profile/GetProfileByID"
 	Profile_UpdateProfile_FullMethodName  = "/profile.Profile/UpdateProfile"
 	Profile_DeleteProfile_FullMethodName  = "/profile.Profile/DeleteProfile"
+	Profile_GetCatalog_FullMethodName     = "/profile.Profile/GetCatalog"
 )
 
 // ProfileClient is the client API for Profile service.
@@ -34,6 +35,7 @@ type ProfileClient interface {
 	GetProfileByID(ctx context.Context, in *GetProfileByIDRequest, opts ...grpc.CallOption) (*GetProfileByIDResponse, error)
 	UpdateProfile(ctx context.Context, in *UpdateProfileRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	DeleteProfile(ctx context.Context, in *DeleteProfileRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	GetCatalog(ctx context.Context, in *GetCatalogRequest, opts ...grpc.CallOption) (*GetCatalogResponse, error)
 }
 
 type profileClient struct {
@@ -84,6 +86,16 @@ func (c *profileClient) DeleteProfile(ctx context.Context, in *DeleteProfileRequ
 	return out, nil
 }
 
+func (c *profileClient) GetCatalog(ctx context.Context, in *GetCatalogRequest, opts ...grpc.CallOption) (*GetCatalogResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetCatalogResponse)
+	err := c.cc.Invoke(ctx, Profile_GetCatalog_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ProfileServer is the server API for Profile service.
 // All implementations must embed UnimplementedProfileServer
 // for forward compatibility.
@@ -92,6 +104,7 @@ type ProfileServer interface {
 	GetProfileByID(context.Context, *GetProfileByIDRequest) (*GetProfileByIDResponse, error)
 	UpdateProfile(context.Context, *UpdateProfileRequest) (*emptypb.Empty, error)
 	DeleteProfile(context.Context, *DeleteProfileRequest) (*emptypb.Empty, error)
+	GetCatalog(context.Context, *GetCatalogRequest) (*GetCatalogResponse, error)
 	mustEmbedUnimplementedProfileServer()
 }
 
@@ -113,6 +126,9 @@ func (UnimplementedProfileServer) UpdateProfile(context.Context, *UpdateProfileR
 }
 func (UnimplementedProfileServer) DeleteProfile(context.Context, *DeleteProfileRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteProfile not implemented")
+}
+func (UnimplementedProfileServer) GetCatalog(context.Context, *GetCatalogRequest) (*GetCatalogResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCatalog not implemented")
 }
 func (UnimplementedProfileServer) mustEmbedUnimplementedProfileServer() {}
 func (UnimplementedProfileServer) testEmbeddedByValue()                 {}
@@ -207,6 +223,24 @@ func _Profile_DeleteProfile_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Profile_GetCatalog_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCatalogRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProfileServer).GetCatalog(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Profile_GetCatalog_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProfileServer).GetCatalog(ctx, req.(*GetCatalogRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Profile_ServiceDesc is the grpc.ServiceDesc for Profile service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -229,6 +263,10 @@ var Profile_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteProfile",
 			Handler:    _Profile_DeleteProfile_Handler,
+		},
+		{
+			MethodName: "GetCatalog",
+			Handler:    _Profile_GetCatalog_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

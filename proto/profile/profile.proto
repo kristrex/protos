@@ -4,6 +4,7 @@ package profile;
 
 import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
 
 option  go_package = "bystrov.profile.1;profile1";
 
@@ -12,6 +13,7 @@ service Profile {
   rpc GetProfileByID(GetProfileByIDRequest) returns (GetProfileByIDResponse);
   rpc UpdateProfile(UpdateProfileRequest) returns (google.protobuf.Empty);
   rpc DeleteProfile(DeleteProfileRequest) returns (google.protobuf.Empty);
+  rpc GetCatalog(GetCatalogRequest) returns (GetCatalogResponse);
 }
 
 message CreateProfileRequest {
@@ -63,4 +65,28 @@ message GetProfileByIDResponse {
 
 message DeleteProfileRequest {
   string user_id = 1;
+}
+
+message GetCatalogRequest {
+  google.protobuf.Int32Value ageFrom = 1;
+  google.protobuf.Int32Value ageTo = 2;
+  google.protobuf.StringValue sex = 3;
+  google.protobuf.Int32Value heightFrom = 4;
+  google.protobuf.Int32Value heightTo = 5;
+  google.protobuf.Int32Value weightFrom = 6;
+  google.protobuf.Int32Value weightTo = 7;
+  int32 page = 8;  // обязательное поле
+  int32 limit = 9; // обязательное поле
+}
+
+message CatalogItem {
+  string user_id = 1;
+  string avatar_url = 2;
+  string name = 3;
+  string last_name = 4;
+}
+
+message GetCatalogResponse {
+  repeated CatalogItem items = 1;    // Массив элементов
+  int32 total_pages = 2;            // Всего страниц
 }
