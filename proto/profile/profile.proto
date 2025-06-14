@@ -89,4 +89,5 @@ message CatalogItem {
 message GetCatalogResponse {
   repeated CatalogItem items = 1;    // Массив элементов
   int32 total_pages = 2;            // Всего страниц
+  int32 total_items = 3;
 }
