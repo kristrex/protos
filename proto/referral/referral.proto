@@ -1,12 +1,12 @@
 syntax = "proto3";
 
-package referal;
+package referral;
 
 import "google/protobuf/empty.proto";
 
-option go_package = "bystrov.referal.1;referalv1";
+option go_package = "bystrov.referral.1;referralv1";
 
-service Referal {
+service Referral {
   rpc Create(CreateRequest) returns (google.protobuf.Empty);
   rpc Update(UpdateRequest) returns (google.protobuf.Empty);
   rpc Delete(DeleteRequest) returns (google.protobuf.Empty);

@@ -2,9 +2,9 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v5.29.2
-// source: referal/referal.proto
+// source: referral/referral.proto
 
-package referalv1
+package referralv1
 
 import (
 	context "context"
@@ -20,179 +20,179 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Referal_Create_FullMethodName = "/referal.Referal/Create"
-	Referal_Update_FullMethodName = "/referal.Referal/Update"
-	Referal_Delete_FullMethodName = "/referal.Referal/Delete"
+	Referral_Create_FullMethodName = "/referral.Referral/Create"
+	Referral_Update_FullMethodName = "/referral.Referral/Update"
+	Referral_Delete_FullMethodName = "/referral.Referral/Delete"
 )
 
-// ReferalClient is the client API for Referal service.
+// ReferralClient is the client API for Referral service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type ReferalClient interface {
+type ReferralClient interface {
 	Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
-type referalClient struct {
+type referralClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewReferalClient(cc grpc.ClientConnInterface) ReferalClient {
-	return &referalClient{cc}
+func NewReferralClient(cc grpc.ClientConnInterface) ReferralClient {
+	return &referralClient{cc}
 }
 
-func (c *referalClient) Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *referralClient) Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, Referal_Create_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, Referral_Create_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *referalClient) Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *referralClient) Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, Referal_Update_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, Referral_Update_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *referalClient) Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *referralClient) Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, Referal_Delete_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, Referral_Delete_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// ReferalServer is the server API for Referal service.
-// All implementations must embed UnimplementedReferalServer
+// ReferralServer is the server API for Referral service.
+// All implementations must embed UnimplementedReferralServer
 // for forward compatibility.
-type ReferalServer interface {
+type ReferralServer interface {
 	Create(context.Context, *CreateRequest) (*emptypb.Empty, error)
 	Update(context.Context, *UpdateRequest) (*emptypb.Empty, error)
 	Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error)
-	mustEmbedUnimplementedReferalServer()
+	mustEmbedUnimplementedReferralServer()
 }
 
-// UnimplementedReferalServer must be embedded to have
+// UnimplementedReferralServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedReferalServer struct{}
+type UnimplementedReferralServer struct{}
 
-func (UnimplementedReferalServer) Create(context.Context, *CreateRequest) (*emptypb.Empty, error) {
+func (UnimplementedReferralServer) Create(context.Context, *CreateRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
 }
-func (UnimplementedReferalServer) Update(context.Context, *UpdateRequest) (*emptypb.Empty, error) {
+func (UnimplementedReferralServer) Update(context.Context, *UpdateRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
 }
-func (UnimplementedReferalServer) Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error) {
+func (UnimplementedReferralServer) Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
 }
-func (UnimplementedReferalServer) mustEmbedUnimplementedReferalServer() {}
-func (UnimplementedReferalServer) testEmbeddedByValue()                 {}
+func (UnimplementedReferralServer) mustEmbedUnimplementedReferralServer() {}
+func (UnimplementedReferralServer) testEmbeddedByValue()                  {}
 
-// UnsafeReferalServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to ReferalServer will
+// UnsafeReferralServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to ReferralServer will
 // result in compilation errors.
-type UnsafeReferalServer interface {
-	mustEmbedUnimplementedReferalServer()
+type UnsafeReferralServer interface {
+	mustEmbedUnimplementedReferralServer()
 }
 
-func RegisterReferalServer(s grpc.ServiceRegistrar, srv ReferalServer) {
-	// If the following call pancis, it indicates UnimplementedReferalServer was
+func RegisterReferralServer(s grpc.ServiceRegistrar, srv ReferralServer) {
+	// If the following call pancis, it indicates UnimplementedReferralServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&Referal_ServiceDesc, srv)
+	s.RegisterService(&Referral_ServiceDesc, srv)
 }
 
-func _Referal_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Referral_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ReferalServer).Create(ctx, in)
+		return srv.(ReferralServer).Create(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Referal_Create_FullMethodName,
+		FullMethod: Referral_Create_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ReferalServer).Create(ctx, req.(*CreateRequest))
+		return srv.(ReferralServer).Create(ctx, req.(*CreateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Referal_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Referral_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ReferalServer).Update(ctx, in)
+		return srv.(ReferralServer).Update(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Referal_Update_FullMethodName,
+		FullMethod: Referral_Update_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ReferalServer).Update(ctx, req.(*UpdateRequest))
+		return srv.(ReferralServer).Update(ctx, req.(*UpdateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Referal_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Referral_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ReferalServer).Delete(ctx, in)
+		return srv.(ReferralServer).Delete(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Referal_Delete_FullMethodName,
+		FullMethod: Referral_Delete_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ReferalServer).Delete(ctx, req.(*DeleteRequest))
+		return srv.(ReferralServer).Delete(ctx, req.(*DeleteRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// Referal_ServiceDesc is the grpc.ServiceDesc for Referal service.
+// Referral_ServiceDesc is the grpc.ServiceDesc for Referral service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var Referal_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "referal.Referal",
-	HandlerType: (*ReferalServer)(nil),
+var Referral_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "referral.Referral",
+	HandlerType: (*ReferralServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Create",
-			Handler:    _Referal_Create_Handler,
+			Handler:    _Referral_Create_Handler,
 		},
 		{
 			MethodName: "Update",
-			Handler:    _Referal_Update_Handler,
+			Handler:    _Referral_Update_Handler,
 		},
 		{
 			MethodName: "Delete",
-			Handler:    _Referal_Delete_Handler,
+			Handler:    _Referral_Delete_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "referal/referal.proto",
+	Metadata: "referral/referral.proto",
 }
