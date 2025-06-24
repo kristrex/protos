@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package referal;
+
+import "google/protobuf/empty.proto";
+
+option go_package = "bystrov.referal.1;referalv1";
+
+service Referal {
+  rpc Create(CreateRequest) returns (google.protobuf.Empty);
+  rpc Update(UpdateRequest) returns (google.protobuf.Empty);
+  rpc Delete(DeleteRequest) returns (google.protobuf.Empty);
+}
+
+message CreateRequest {
+  string user_id = 1;
+}
+
+message UpdateRequest {
+  string user_id = 1;
+}
+
+message DeleteRequest {
+  string user_id = 1;
+}
