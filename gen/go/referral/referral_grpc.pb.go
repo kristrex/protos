@@ -20,10 +20,11 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Referral_Create_FullMethodName  = "/referral.Referral/Create"
-	Referral_Update_FullMethodName  = "/referral.Referral/Update"
-	Referral_Delete_FullMethodName  = "/referral.Referral/Delete"
-	Referral_GetLink_FullMethodName = "/referral.Referral/GetLink"
+	Referral_Create_FullMethodName             = "/referral.Referral/Create"
+	Referral_Update_FullMethodName             = "/referral.Referral/Update"
+	Referral_Delete_FullMethodName             = "/referral.Referral/Delete"
+	Referral_CreateReferralLink_FullMethodName = "/referral.Referral/CreateReferralLink"
+	Referral_GetLink_FullMethodName            = "/referral.Referral/GetLink"
 )
 
 // ReferralClient is the client API for Referral service.
@@ -33,6 +34,7 @@ type ReferralClient interface {
 	Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	CreateReferralLink(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	GetLink(ctx context.Context, in *GetLinkRequest, opts ...grpc.CallOption) (*GetLinkResponse, error)
 }
 
@@ -74,6 +76,16 @@ func (c *referralClient) Delete(ctx context.Context, in *DeleteRequest, opts ...
 	return out, nil
 }
 
+func (c *referralClient) CreateReferralLink(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, Referral_CreateReferralLink_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *referralClient) GetLink(ctx context.Context, in *GetLinkRequest, opts ...grpc.CallOption) (*GetLinkResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetLinkResponse)
@@ -91,6 +103,7 @@ type ReferralServer interface {
 	Create(context.Context, *CreateRequest) (*emptypb.Empty, error)
 	Update(context.Context, *UpdateRequest) (*emptypb.Empty, error)
 	Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error)
+	CreateReferralLink(context.Context, *CreateRequest) (*emptypb.Empty, error)
 	GetLink(context.Context, *GetLinkRequest) (*GetLinkResponse, error)
 	mustEmbedUnimplementedReferralServer()
 }
@@ -110,6 +123,9 @@ func (UnimplementedReferralServer) Update(context.Context, *UpdateRequest) (*emp
 }
 func (UnimplementedReferralServer) Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
+}
+func (UnimplementedReferralServer) CreateReferralLink(context.Context, *CreateRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateReferralLink not implemented")
 }
 func (UnimplementedReferralServer) GetLink(context.Context, *GetLinkRequest) (*GetLinkResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetLink not implemented")
@@ -189,6 +205,24 @@ func _Referral_Delete_Handler(srv interface{}, ctx context.Context, dec func(int
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Referral_CreateReferralLink_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ReferralServer).CreateReferralLink(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Referral_CreateReferralLink_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ReferralServer).CreateReferralLink(ctx, req.(*CreateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Referral_GetLink_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetLinkRequest)
 	if err := dec(in); err != nil {
@@ -225,6 +259,10 @@ var Referral_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Delete",
 			Handler:    _Referral_Delete_Handler,
+		},
+		{
+			MethodName: "CreateReferralLink",
+			Handler:    _Referral_CreateReferralLink_Handler,
 		},
 		{
 			MethodName: "GetLink",
