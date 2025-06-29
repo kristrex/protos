@@ -27,7 +27,7 @@ message DeleteRequest {
   string user_id = 1;
 }
 
-message CreateReferralLink {
+message CreateReferralLinkRequest {
   string user_id = 1;
 }
 
