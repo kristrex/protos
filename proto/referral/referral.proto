@@ -10,10 +10,12 @@ service Referral {
   rpc Create(CreateRequest) returns (google.protobuf.Empty);
   rpc Update(UpdateRequest) returns (google.protobuf.Empty);
   rpc Delete(DeleteRequest) returns (google.protobuf.Empty);
+  rpc GetLink(GetLinkRequest) returns (GetLinkResponse);
 }
 
 message CreateRequest {
-  string user_id = 1;
+  string referrer_id = 1;
+  string referral_id = 2;
 }
 
 message UpdateRequest {
@@ -22,4 +24,12 @@ message UpdateRequest {
 
 message DeleteRequest {
   string user_id = 1;
+}
+
+message GetLinkRequest {
+  string user_id = 1;
+}
+
+message GetLinkResponse {
+  string referral_link = 1;
 }
