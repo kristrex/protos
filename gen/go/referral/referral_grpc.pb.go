@@ -34,7 +34,7 @@ type ReferralClient interface {
 	Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	CreateReferralLink(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	CreateReferralLink(ctx context.Context, in *CreateReferralLinkRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	GetLink(ctx context.Context, in *GetLinkRequest, opts ...grpc.CallOption) (*GetLinkResponse, error)
 }
 
@@ -76,7 +76,7 @@ func (c *referralClient) Delete(ctx context.Context, in *DeleteRequest, opts ...
 	return out, nil
 }
 
-func (c *referralClient) CreateReferralLink(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *referralClient) CreateReferralLink(ctx context.Context, in *CreateReferralLinkRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, Referral_CreateReferralLink_FullMethodName, in, out, cOpts...)
@@ -103,7 +103,7 @@ type ReferralServer interface {
 	Create(context.Context, *CreateRequest) (*emptypb.Empty, error)
 	Update(context.Context, *UpdateRequest) (*emptypb.Empty, error)
 	Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error)
-	CreateReferralLink(context.Context, *CreateRequest) (*emptypb.Empty, error)
+	CreateReferralLink(context.Context, *CreateReferralLinkRequest) (*emptypb.Empty, error)
 	GetLink(context.Context, *GetLinkRequest) (*GetLinkResponse, error)
 	mustEmbedUnimplementedReferralServer()
 }
@@ -124,7 +124,7 @@ func (UnimplementedReferralServer) Update(context.Context, *UpdateRequest) (*emp
 func (UnimplementedReferralServer) Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
 }
-func (UnimplementedReferralServer) CreateReferralLink(context.Context, *CreateRequest) (*emptypb.Empty, error) {
+func (UnimplementedReferralServer) CreateReferralLink(context.Context, *CreateReferralLinkRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateReferralLink not implemented")
 }
 func (UnimplementedReferralServer) GetLink(context.Context, *GetLinkRequest) (*GetLinkResponse, error) {
@@ -206,7 +206,7 @@ func _Referral_Delete_Handler(srv interface{}, ctx context.Context, dec func(int
 }
 
 func _Referral_CreateReferralLink_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateRequest)
+	in := new(CreateReferralLinkRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -218,7 +218,7 @@ func _Referral_CreateReferralLink_Handler(srv interface{}, ctx context.Context, 
 		FullMethod: Referral_CreateReferralLink_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ReferralServer).CreateReferralLink(ctx, req.(*CreateRequest))
+		return srv.(ReferralServer).CreateReferralLink(ctx, req.(*CreateReferralLinkRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

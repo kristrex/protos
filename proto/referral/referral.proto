@@ -10,7 +10,7 @@ service Referral {
   rpc Create(CreateRequest) returns (google.protobuf.Empty);
   rpc Update(UpdateRequest) returns (google.protobuf.Empty);
   rpc Delete(DeleteRequest) returns (google.protobuf.Empty);
-  rpc CreateReferralLink(CreateRequest) returns (google.protobuf.Empty);
+  rpc CreateReferralLink(CreateReferralLinkRequest) returns (google.protobuf.Empty);
   rpc GetLink(GetLinkRequest) returns (GetLinkResponse);
 }
 
