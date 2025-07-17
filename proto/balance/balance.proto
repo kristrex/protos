@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package referral;
+
+option go_package = "bystrov.balance.1;balancev1";
+
+service Balance {
+  // Получение баланса пользователя
+  rpc GetBalance (GetBalanceRequest) returns (GetBalanceResponse);
+
+  // Пополнение баланса (например, за реферала)
+  rpc AddFunds (AddFundsRequest) returns (AddFundsResponse);
+
+  // Запрос на вывод средств
+  rpc WithdrawFunds (WithdrawRequest) returns (WithdrawResponse);
+}
+
+// Запрос баланса
+message GetBalanceRequest {
+  string user_id = 1;
+}
+
+// Ответ с балансом
+message GetBalanceResponse {
+  double current_balance = 1;
+  double withdrawn_balance = 2;
+  double total_earned = 3;  // current + withdrawn
+  string currency = 4;      // RUB, USD и т.д.
+}
+
+// Запрос на пополнение
+message AddFundsRequest {
+  string user_id = 1;
+  double amount = 2;
+  string currency = 3;
+  string reference_id = 4;  // ID транзакции/реферала для идемпотентности
+  string payment_method = 5;
+}
+
+// Ответ на пополнение
+message AddFundsResponse {
+  bool success = 1;
+  string transaction_id = 2;
+  double new_balance = 3;
+}
+
+// Запрос на вывод
+message WithdrawRequest {
+  string user_id = 1;
+  double amount = 2;
+  string payment_method = 3;  // card, crypto, etc.
+  string currency = 4;
+}
+
+// Ответ на вывод
+message WithdrawResponse {
+  bool success = 1;
+  string transaction_id = 2;
+  double new_balance = 3;
+  double new_withdrawn = 4;
+}

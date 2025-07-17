@@ -12,6 +12,7 @@ service Referral {
   rpc Delete(DeleteRequest) returns (google.protobuf.Empty);
   rpc CreateReferralLink(CreateReferralLinkRequest) returns (google.protobuf.Empty);
   rpc GetLink(GetLinkRequest) returns (GetLinkResponse);
+  rpc
 }
 
 message CreateRequest {
