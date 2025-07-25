@@ -12,7 +12,7 @@ service Referral {
   rpc Delete(DeleteRequest) returns (google.protobuf.Empty);
   rpc CreateReferralLink(CreateReferralLinkRequest) returns (google.protobuf.Empty);
   rpc GetLink(GetLinkRequest) returns (GetLinkResponse);
-  rpc
+  rpc GetReferralInfo(GetInfoRequest) returns (GetInfoResponse);
 }
 
 message CreateRequest {
@@ -38,4 +38,16 @@ message GetLinkRequest {
 
 message GetLinkResponse {
   string referral_link = 1;
+}
+
+message GetInfoRequest {
+  string user_id = 1;
+}
+
+message GetInfoResponse {
+  string referral_link = 1;
+  double current_balance = 2;
+  double withdrawn_balance = 3;
+  double total_earned = 4;
+  string currency = 5;
 }
