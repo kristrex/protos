@@ -13,6 +13,7 @@ service Auth {
   rpc RefreshToken(RefreshTokenRequest) returns (RefreshTokenResponse);
   rpc Logout(LogoutRequest) returns (google.protobuf.Empty);
   rpc Session(SessionRequest) returns (SessionResponse);
+  rpc ChangePassword(ChangePasswordRequest) returns (google.protobuf.Empty);
 }
 
 message RegisterRequest {
@@ -69,4 +70,10 @@ message SessionResponse {
   string last_name = 3;
   string role = 4;
   bool is_admin = 5;
+}
+
+message ChangePasswordRequest {
+  string access_token = 1; // Текущий access токен
+  string old_password = 2; // Старый пароль
+  string new_password = 3; // Новый пароль
 }
