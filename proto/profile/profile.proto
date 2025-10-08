@@ -20,6 +20,7 @@ message CreateProfileRequest {
   string user_id = 1;
   string name = 2; // Имя
   string last_name = 3; // Фамилия
+  string goal = 4; // Цель пользователя (если "model", автоматически устанавливает is_model = true)
 }
 
 message UpdateProfileRequest {
@@ -39,6 +40,7 @@ message UpdateProfileRequest {
 
   string avatar_url = 12;
   bool is_model = 14; // Является ли пользователь моделью
+  string goal = 15; // Цель пользователя (если "model", автоматически устанавливает is_model = true)
 
   string user_id = 13;
 }
