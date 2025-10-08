@@ -38,6 +38,7 @@ message UpdateProfileRequest {
   repeated string photos = 11;
 
   string avatar_url = 12;
+  bool is_model = 14; // Является ли пользователь моделью
 
   string user_id = 13;
 }
@@ -61,6 +62,7 @@ message GetProfileByIDResponse {
 
   // ID аватарки (указывает на одну из фотографий в списке photos)
   string avatar_url = 12; // UUID аватарки
+  bool is_model = 13; // Является ли пользователь моделью
 }
 
 message DeleteProfileRequest {
