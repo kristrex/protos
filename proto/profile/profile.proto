@@ -88,11 +88,11 @@ message CatalogItem {
   string avatar_url = 2;
   string name = 3;
   string last_name = 4;
+  int32 age = 5;
 }
 
 message GetCatalogResponse {
   repeated CatalogItem items = 1;    // Массив элементов
   int32 total_pages = 2;            // Всего страниц
   int32 total_items = 3;
-  int32 age = 4;
 }
