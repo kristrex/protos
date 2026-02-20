@@ -20,13 +20,15 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Auth_Register_FullMethodName       = "/auth.Auth/Register"
-	Auth_Login_FullMethodName          = "/auth.Auth/Login"
-	Auth_IsAdmin_FullMethodName        = "/auth.Auth/IsAdmin"
-	Auth_RefreshToken_FullMethodName   = "/auth.Auth/RefreshToken"
-	Auth_Logout_FullMethodName         = "/auth.Auth/Logout"
-	Auth_Session_FullMethodName        = "/auth.Auth/Session"
-	Auth_ChangePassword_FullMethodName = "/auth.Auth/ChangePassword"
+	Auth_Register_FullMethodName           = "/auth.Auth/Register"
+	Auth_Login_FullMethodName              = "/auth.Auth/Login"
+	Auth_IsAdmin_FullMethodName            = "/auth.Auth/IsAdmin"
+	Auth_RefreshToken_FullMethodName       = "/auth.Auth/RefreshToken"
+	Auth_Logout_FullMethodName             = "/auth.Auth/Logout"
+	Auth_Session_FullMethodName            = "/auth.Auth/Session"
+	Auth_ChangePassword_FullMethodName     = "/auth.Auth/ChangePassword"
+	Auth_TrackUserAccess_FullMethodName    = "/auth.Auth/TrackUserAccess"
+	Auth_GetUserAccessCount_FullMethodName = "/auth.Auth/GetUserAccessCount"
 )
 
 // AuthClient is the client API for Auth service.
@@ -40,6 +42,8 @@ type AuthClient interface {
 	Logout(ctx context.Context, in *LogoutRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	Session(ctx context.Context, in *SessionRequest, opts ...grpc.CallOption) (*SessionResponse, error)
 	ChangePassword(ctx context.Context, in *ChangePasswordRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	TrackUserAccess(ctx context.Context, in *TrackUserAccessRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	GetUserAccessCount(ctx context.Context, in *GetUserAccessCountRequest, opts ...grpc.CallOption) (*GetUserAccessCountResponse, error)
 }
 
 type authClient struct {
@@ -120,6 +124,26 @@ func (c *authClient) ChangePassword(ctx context.Context, in *ChangePasswordReque
 	return out, nil
 }
 
+func (c *authClient) TrackUserAccess(ctx context.Context, in *TrackUserAccessRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, Auth_TrackUserAccess_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authClient) GetUserAccessCount(ctx context.Context, in *GetUserAccessCountRequest, opts ...grpc.CallOption) (*GetUserAccessCountResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetUserAccessCountResponse)
+	err := c.cc.Invoke(ctx, Auth_GetUserAccessCount_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AuthServer is the server API for Auth service.
 // All implementations must embed UnimplementedAuthServer
 // for forward compatibility.
@@ -131,6 +155,8 @@ type AuthServer interface {
 	Logout(context.Context, *LogoutRequest) (*emptypb.Empty, error)
 	Session(context.Context, *SessionRequest) (*SessionResponse, error)
 	ChangePassword(context.Context, *ChangePasswordRequest) (*emptypb.Empty, error)
+	TrackUserAccess(context.Context, *TrackUserAccessRequest) (*emptypb.Empty, error)
+	GetUserAccessCount(context.Context, *GetUserAccessCountRequest) (*GetUserAccessCountResponse, error)
 	mustEmbedUnimplementedAuthServer()
 }
 
@@ -161,6 +187,12 @@ func (UnimplementedAuthServer) Session(context.Context, *SessionRequest) (*Sessi
 }
 func (UnimplementedAuthServer) ChangePassword(context.Context, *ChangePasswordRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ChangePassword not implemented")
+}
+func (UnimplementedAuthServer) TrackUserAccess(context.Context, *TrackUserAccessRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TrackUserAccess not implemented")
+}
+func (UnimplementedAuthServer) GetUserAccessCount(context.Context, *GetUserAccessCountRequest) (*GetUserAccessCountResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserAccessCount not implemented")
 }
 func (UnimplementedAuthServer) mustEmbedUnimplementedAuthServer() {}
 func (UnimplementedAuthServer) testEmbeddedByValue()              {}
@@ -309,6 +341,42 @@ func _Auth_ChangePassword_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Auth_TrackUserAccess_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TrackUserAccessRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServer).TrackUserAccess(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Auth_TrackUserAccess_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServer).TrackUserAccess(ctx, req.(*TrackUserAccessRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Auth_GetUserAccessCount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserAccessCountRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServer).GetUserAccessCount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Auth_GetUserAccessCount_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServer).GetUserAccessCount(ctx, req.(*GetUserAccessCountRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Auth_ServiceDesc is the grpc.ServiceDesc for Auth service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -343,6 +411,14 @@ var Auth_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ChangePassword",
 			Handler:    _Auth_ChangePassword_Handler,
+		},
+		{
+			MethodName: "TrackUserAccess",
+			Handler:    _Auth_TrackUserAccess_Handler,
+		},
+		{
+			MethodName: "GetUserAccessCount",
+			Handler:    _Auth_GetUserAccessCount_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

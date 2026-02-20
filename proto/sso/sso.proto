@@ -14,6 +14,8 @@ service Auth {
   rpc Logout(LogoutRequest) returns (google.protobuf.Empty);
   rpc Session(SessionRequest) returns (SessionResponse);
   rpc ChangePassword(ChangePasswordRequest) returns (google.protobuf.Empty);
+  rpc TrackUserAccess(TrackUserAccessRequest) returns (google.protobuf.Empty);
+  rpc GetUserAccessCount(GetUserAccessCountRequest) returns (GetUserAccessCountResponse);
 }
 
 message RegisterRequest {
@@ -76,4 +78,16 @@ message ChangePasswordRequest {
   string access_token = 1; // Текущий access токен
   string old_password = 2; // Старый пароль
   string new_password = 3; // Новый пароль
+}
+
+message TrackUserAccessRequest {
+  string access_token = 1;
+}
+
+message GetUserAccessCountRequest {
+  string access_token = 1;
+}
+
+message GetUserAccessCountResponse {
+  int64 count = 1;
 }
