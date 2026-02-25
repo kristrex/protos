@@ -81,6 +81,7 @@ message GetCatalogRequest {
   google.protobuf.Int32Value weightTo = 7;
   int32 page = 8;  // обязательное поле
   int32 limit = 9; // обязательное поле
+  bool hasPhoto = 10;
 }
 
 message CatalogItem {
